@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  rabbit:
+    image: rabbitmq:3-management
+    hostname: localhost
+    ports:
+    - '8080:15672'
+    - '5672:5672'
+
+
