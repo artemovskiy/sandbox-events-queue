@@ -11,12 +11,12 @@ export class Schedule {
   }
 
   async setupQueue(exchangeName: string) {
-    await Promise.all(range(this.workersCount).map(routingKey => fork(routingKey.toString())))
     const connection = await createAmqpConnection()
     const channel = await connection.createChannel()
     await channel.assertExchange(exchangeName, 'direct', {
       durable: true,
     })
+    await Promise.all(range(this.workersCount).map(routingKey => fork(routingKey.toString())))
     return new Queue(channel, exchangeName, this.workersCount)
   }
 
